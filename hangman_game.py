@@ -11,6 +11,7 @@ guessad = []
 print("Welcome to Hangman Game")
 print("The word is selected from the hidden wordlist.")
 print(f"The word has {length_of_word} characters.")
+# print("The word starts with: ",  end="")   will work with it leter
 done = False
 
 while not done:
