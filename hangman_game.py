@@ -1,7 +1,14 @@
-word = "Pyhton".lower()
+wordlist = ["python", "java", "kotlin", "javascript", "hangman", "programming", "developer", "function", "variable", "condition", "loop", "array", "string", "integer", "boolean", "dictionary", "tuple", "set", "exception", "module", "package", "algorithm", "data", "structure", "object", "class", "inheritance", "polymorphism", "encapsulation", "abstraction", "interface", "constructor", "destructor", "recursion", "iteration", "syntax", "semantics", "compilation", "interpretation", "debugging", "testing", "deployment", "version", "control", "repository", "branch", "merge", "commit", "push", "pull", "clone", "fork", "issue", "bug", "feature", "release", "build", "continuous", "integration", "delivery", "devops", "cloud", "server", "client", "database", "query", "index", "table", "schema", "normalization", "transaction", "backup", "restore", "HTML", "CSS"]
+import random
+range = len(wordlist)
+index = random.randint(0, range - 1)
+
+
+word = wordlist[index].lower()
 chances = 6
 guessad = []
 print("Welcome to Hangman Game")
+print("The word is selected from the hidden wordlist.")
 done = False
 
 while not done:
@@ -16,7 +23,7 @@ while not done:
 
     if guess.lower().strip() not in word:
         chances -= 1
-        print("Wrong")
+        print("Wrong guess")
         if chances == 0:
             break
 
