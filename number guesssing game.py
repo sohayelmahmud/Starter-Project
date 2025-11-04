@@ -1,3 +1,7 @@
+# will fix bug for valuerror,
+# will create a function to easier the code, to avoid future update error
+
+
 import random
 
 print("Welcome to Number Guessing Game")
