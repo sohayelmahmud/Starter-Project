@@ -39,10 +39,9 @@ print("Welcome to Number Guessing Game")
 while True:
     chances = 5
     number = 0
-    minimum = 0
+    minimum = 1
     maximum = 200
-    RANGE_SIZE = 0
-    HINT = 0
+
 
     while True:
         try:
@@ -65,7 +64,7 @@ while True:
                     print("The minimum number must be strictly less than the maximum number.")
                     continue
                 number = random.randint(minimum, maximum)
-                print(f"Number set between {minimum} and {maximum}")
+                print(f"Number set between {minimum} and {maximum}.")
                 break
             except ValueError:
                 print("Invalid input! Please enter valid whole numbers for the range.")
@@ -75,8 +74,32 @@ while True:
 
 
     elif user_input == 2:
-        number = random.randint(0, 200)
-        print("Number set between 0 and 200.")
+
+        while True:
+            try:
+                difficulty = int(input("Select Difficulty: \n1. Easy (10 Chances, 1-100)\n2. Medium (7 Chances, 1-200)\n3. Hard (5 Chances, 1-500) : "))
+
+                if difficulty in [1, 2, 3]:
+                    break
+                else:
+                    print("Please enter 1, 2, or 3 only.")
+            except ValueError:
+                print("Invalid input. Please enter a whole number.")
+
+        if difficulty == 1:
+            chances = 10
+            maximum = 100
+        elif difficulty == 2:
+            chances = 7
+            maximum = 200
+        elif difficulty == 3:
+            chances = 5
+            maximum = 500
+
+
+
+        number = random.randint(1, maximum)
+        print(f"Number set between {minimum} and {maximum}. ")
         print(number)
 
         game(number, chances, minimum, maximum)
