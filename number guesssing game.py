@@ -2,7 +2,10 @@
 
 import random
 
-def game(number, chances = 5):
+def game(number, chances, minimum, maximum):
+        RANGE_SIZE = maximum - minimum
+        HINT = RANGE_SIZE * 0.10
+
         while chances > 0:
             try:
                 guess = int(input("Guess the number: "))
@@ -17,17 +20,17 @@ def game(number, chances = 5):
             else:
                 chances -= 1
                 if chances > 0:
-                    if (guess - 20) > number:
+                    if (guess - HINT) > number:
                         print("The guess is too high!")
                     elif guess > number:
                         print("The guess is high!")
-                    elif (guess + 20) < number:
+                    elif (guess + HINT) < number:
                         print("The guess is too low!")
                     elif guess < number:
                         print("The guess is low!")
 
                     print(f"You have {chances} chances left. Try again.")
-        print(f"You lost! The number was {number}. Better luck next time.")
+        print(f"You lost! The number was {number} Better luck next time.")
 
 
 print("Welcome to Number Guessing Game")
@@ -36,6 +39,11 @@ print("Welcome to Number Guessing Game")
 while True:
     chances = 5
     number = 0
+    minimum = 0
+    maximum = 200
+    RANGE_SIZE = 0
+    HINT = 0
+
     while True:
         try:
             user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
@@ -63,7 +71,7 @@ while True:
                 print("Invalid input! Please enter valid whole numbers for the range.")
         print(number)
 
-        game(number, chances)
+        game(number, chances, minimum, maximum)
 
 
     elif user_input == 2:
@@ -71,7 +79,7 @@ while True:
         print("Number set between 0 and 200.")
         print(number)
 
-        game(number, chances)
+        game(number, chances, minimum, maximum)
 
 
 
