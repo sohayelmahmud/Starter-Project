@@ -40,3 +40,15 @@ while True:
     password = ''.join(password_chars)
 
     print(password)
+
+    while True:
+        play_again = input("Do you want to generate password? (y/n): ").lower().strip()
+        if play_again == "n":
+            print("Thanks.. Goodbye!")
+            exit()
+        elif play_again == "y":
+            print("Creating a new password.")
+            print("......................................")
+            break
+        else:
+            print("Invalid Input. please enter 'y' or 'n'.")
