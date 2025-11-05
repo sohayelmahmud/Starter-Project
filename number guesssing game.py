@@ -1,69 +1,64 @@
 # will fix bug for valuerror,
-# will create a function to easier the code, to avoid future update error
-
 
 import random
+
+def game(number, chances = 5):
+        while chances > 0:
+            guess = int(input("Guess the number: "))
+            if number == guess:
+                print("Congratulation! You guessed it right.")
+                return
+
+            else:
+                chances -= 1
+                if chances > 0:
+                    if (guess - 20) > number:
+                        print("The guess is too high!")
+                    elif guess > number:
+                        print("The guess is high!")
+                    elif (guess + 20) < number:
+                        print("The guess is too low!")
+                    elif guess < number:
+                        print("The guess is low!")
+
+                    print(f"You have {chances} chances left. Try again.")
+        print("You lost! Better luck next time.")
+
 
 print("Welcome to Number Guessing Game")
 
 
-user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
+while True:
+    user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
 
-chances = 5
+    chances = 5
+    number = 0
 
-if user_input == 1:
-    minimum = int(input("Set the minimum range of number: "))
-    maximum = int(input("Set the maximum range of number: "))
-    number = random.randint(minimum, maximum)
-    print(number)
+    if user_input == 1:
+        minimum = int(input("Set the minimum range of number: "))
+        maximum = int(input("Set the maximum range of number: "))
+        number = random.randint(minimum, maximum)
+        print(number)
 
-    while chances > 0:
-        guess = int(input("Guess the number: "))
-        if number == guess:
-            print("Congratulation! You guessed it right.")
-            break
-
-        else:
-            if chances != 1:
-                if (guess - 20) > number:
-                    print("The guess is too high!")
-                elif guess > number:
-                    print("The guess is high!")
-                elif (guess + 20) < number:
-                    print("The guess is too low!")
-                elif guess < number:
-                    print("The guess is low!")
-
-                print(f"You have {chances-1} chances left. Try again.")
-            else:
-                print("You lost! Better luck next time")
-            chances -= 1
-            continue
+        game(number, chances)
 
 
-if user_input == 2:
-    number = random.randint(0, 200)
-    print(number)
+    elif user_input == 2:
+        number = random.randint(0, 200)
+        print(number)
 
-    while chances > 0:
-        guess = int(input("Guess the number: "))
-        if number == guess:
-            print("Congratulation! You guessed it right.")
-            break
+        game(number, chances)
 
-        else:
-            if chances != 1:
-                if (guess - 20) > number:
-                    print("The guess is too high!")
-                elif guess > number:
-                    print("The guess is high!")
-                elif (guess + 20) < number:
-                    print("The guess is too low!")
-                elif guess < number:
-                    print("The guess is low!")
 
-                print(f"You have {chances-1} chances left. Try again.")
-            else:
-                print("You lost! Better luck next time")
-            chances -= 1
-            continue
+    play_again = input("Do you wan to play again? (y/n): ")
+
+    if play_again == "n":
+        print("Thanks for playong.")
+        break
+    elif play_again == "y":
+        print("Starting a new game.")
+        print("................................................................")
+        continue
+    else:
+        print("Invalid Input. Assuming you meant 'n'. Exiting.")
+        break
