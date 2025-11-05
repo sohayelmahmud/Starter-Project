@@ -108,7 +108,7 @@ while True:
 
 # play again loop, bake to the main loop or exit
     while True:
-        play_again = input("Do you want to play again? (y/n): ")
+        play_again = input("Do you want to play again? (y/n): ").lower().strip()
         if play_again == "n":
             print("Thanks for playing. Goodbye!")
             exit()
