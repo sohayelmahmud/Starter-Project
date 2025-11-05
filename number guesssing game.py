@@ -1,11 +1,13 @@
-# will fix bug for valuerror,
+
 
 import random
 
+# game function
 def game(number, chances, minimum, maximum):
+        # hint calculation
         RANGE_SIZE = maximum - minimum
         HINT = RANGE_SIZE * 0.10
-
+# take guess from user and compare with the ans
         while chances > 0:
             try:
                 guess = int(input("Guess the number: "))
@@ -33,16 +35,17 @@ def game(number, chances, minimum, maximum):
         print(f"You lost! The number was {number} Better luck next time.")
 
 
+# main program start
 print("Welcome to Number Guessing Game")
 
-
+# main loop for the game
 while True:
     chances = 5
     number = 0
     minimum = 1
     maximum = 200
 
-
+# range set loop for avoid error
     while True:
         try:
             user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
@@ -54,7 +57,7 @@ while True:
             print("Invalid input. Please enter 1 or 2.")
 
 
-
+# user input min & max game start & inside loop for avoiding min-max error
     if user_input == 1:
         while True:
             try:
@@ -68,11 +71,11 @@ while True:
                 break
             except ValueError:
                 print("Invalid input! Please enter valid whole numbers for the range.")
-        print(number)
+        # print(number) #.... print testing....................
 
         game(number, chances, minimum, maximum)
 
-
+# computer set game start & inside loop for setting difficulty level
     elif user_input == 2:
 
         while True:
@@ -96,16 +99,14 @@ while True:
             chances = 5
             maximum = 500
 
-
-
         number = random.randint(1, maximum)
         print(f"Number set between {minimum} and {maximum}. ")
-        print(number)
+        #print(number)   #.... print for testing...............
 
         game(number, chances, minimum, maximum)
 
 
-
+# play again loop, bake to the main loop or exit
     while True:
         play_again = input("Do you want to play again? (y/n): ")
         if play_again == "n":
