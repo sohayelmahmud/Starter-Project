@@ -27,7 +27,7 @@ def game(number, chances = 5):
                         print("The guess is low!")
 
                     print(f"You have {chances} chances left. Try again.")
-        print("You lost! Better luck next time.")
+        print(f"You lost! The number was {number} Better luck next time.")
 
 
 print("Welcome to Number Guessing Game")
@@ -57,6 +57,7 @@ while True:
                     print("The minimum number must be strictly less than the maximum number.")
                     continue
                 number = random.randint(minimum, maximum)
+                print(f"Number set between {minimum} and {maximum}")
                 break
             except ValueError:
                 print("Invalid input! Please enter valid whole numbers for the range.")
@@ -67,6 +68,7 @@ while True:
 
     elif user_input == 2:
         number = random.randint(0, 200)
+        print("Number set between 0 and 200.")
         print(number)
 
         game(number, chances)
@@ -76,7 +78,7 @@ while True:
     while True:
         play_again = input("Do you wan to play again? (y/n): ")
         if play_again == "n":
-            print("Thanks for playong.")
+            print("Thanks for playing. Goodbye!")
             exit()
         elif play_again == "y":
             print("Starting a new game.")
