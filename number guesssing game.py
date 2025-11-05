@@ -27,7 +27,7 @@ def game(number, chances = 5):
                         print("The guess is low!")
 
                     print(f"You have {chances} chances left. Try again.")
-        print(f"You lost! The number was {number} Better luck next time.")
+        print(f"You lost! The number was {number}. Better luck next time.")
 
 
 print("Welcome to Number Guessing Game")
@@ -76,7 +76,7 @@ while True:
 
 
     while True:
-        play_again = input("Do you wan to play again? (y/n): ")
+        play_again = input("Do you want to play again? (y/n): ")
         if play_again == "n":
             print("Thanks for playing. Goodbye!")
             exit()
