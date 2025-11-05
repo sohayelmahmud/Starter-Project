@@ -4,7 +4,12 @@ import random
 
 def game(number, chances = 5):
         while chances > 0:
-            guess = int(input("Guess the number: "))
+            try:
+                guess = int(input("Guess the number: "))
+            except ValueError:
+                print("Invalid input. Please enter a whole number.")
+                continue
+
             if number == guess:
                 print("Congratulation! You guessed it right.")
                 return
@@ -29,15 +34,32 @@ print("Welcome to Number Guessing Game")
 
 
 while True:
-    user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
-
     chances = 5
     number = 0
+    while True:
+        try:
+            user_input = int(input("Do you want to set the range of number or let me set it for you? \n1. I want to set \n2. You can set: "))
+            if user_input in [1,2]:
+                break
+            else:
+                print("Please enter 1 or 2 only.")
+        except ValueError:
+            print("Invalid input. Please enter 1 or 2.")
+
+
 
     if user_input == 1:
-        minimum = int(input("Set the minimum range of number: "))
-        maximum = int(input("Set the maximum range of number: "))
-        number = random.randint(minimum, maximum)
+        while True:
+            try:
+                minimum = int(input("Set the minimum range of number: "))
+                maximum = int(input("Set the maximum range of number: "))
+                if minimum >= maximum:
+                    print("The minimum number must be strictly less than the maximum number.")
+                    continue
+                number = random.randint(minimum, maximum)
+                break
+            except ValueError:
+                print("Invalid input! Please enter valid whole numbers for the range.")
         print(number)
 
         game(number, chances)
@@ -50,15 +72,15 @@ while True:
         game(number, chances)
 
 
-    play_again = input("Do you wan to play again? (y/n): ")
 
-    if play_again == "n":
-        print("Thanks for playong.")
-        break
-    elif play_again == "y":
-        print("Starting a new game.")
-        print("................................................................")
-        continue
-    else:
-        print("Invalid Input. Assuming you meant 'n'. Exiting.")
-        break
+    while True:
+        play_again = input("Do you wan to play again? (y/n): ")
+        if play_again == "n":
+            print("Thanks for playong.")
+            exit()
+        elif play_again == "y":
+            print("Starting a new game.")
+            print("................................................................")
+            break
+        else:
+            print("Invalid Input. please enter 'y' or 'n'.")
