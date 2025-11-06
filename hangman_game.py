@@ -194,7 +194,7 @@ index = random.randint(0, range - 1)
 word = wordlist[index].lower()
 
 #test print(word), remove this line in production
-print(word)
+#print(word)
 
 chances = lenght_of_word
 guessad = []
