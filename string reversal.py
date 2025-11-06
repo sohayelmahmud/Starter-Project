@@ -1,5 +1,5 @@
-def reverse_string(text):
-    return text[::-1]
+# def reverse_string(text):
+#     return text[::-1]
 
 
 while True:
@@ -9,7 +9,7 @@ while True:
         print("Input cannot be empty. Please enter some text.")
         continue
 
-    reversed_text = reverse_string(user_input)
+    reversed_text = user_input[::-1]
 
     print(f"\nOriginal Text: {user_input}")
     print(f"Reversed Text: {reversed_text}")
