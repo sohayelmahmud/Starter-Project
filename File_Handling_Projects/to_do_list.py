@@ -64,6 +64,7 @@ def add_task():
     with open (file_path, "a") as file:
         file.write(task+"\n")
     print("Task added.")
+    show_task()
 
 
 #delete task
@@ -84,22 +85,31 @@ def del_task():
         for count, line in enumerate(lines, 1):
             print(f"{count}. {line.strip()}")
 
-        choice = int(input("Which task do you want to delete? (Enter number) "))
+        while True:
+            try:
+                choice = int(input("Which task do you want to delete? (Enter the task number or 0 to cencel): "))
 
-        if 1 <= choice <= len(lines):
-            new_lines = [line for index, line in enumerate(lines, 1) if index != choice]
+                if choice == 0:
+                    print("Deletion cancelled.")
+                    show_task()
+                    return
+                if 1 <= choice <= len(lines):
+                    break
+                else:
+                    print("Invalid task number. Please enter a number from the list or '0' to cancel.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
-            with open(file_path, "w") as file:
-                file.writelines(new_lines)
+        new_lines = [line for index, line in enumerate(lines, 1) if index != choice]
 
-            print("Task deleted.")
-            show_task()
-            input("Press Enter to return to the Main Menu...")
-        else:
-            print("Invalid task number.")
+        with open(file_path, "w") as file:
+            file.writelines(new_lines)
+
+        print("Task deleted.")
+        show_task()
 
     except ValueError:
-        print("Invalid input. Please enter a number.")
+        pass
 
 
 # get input form user
@@ -143,4 +153,5 @@ def main():
             print("Exiting application.")
             break
 
-main()
+if __name__ == "__main__":
+    main()
