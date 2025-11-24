@@ -7,7 +7,7 @@ file_path = f"{folder_path}/diary.txt"
 
 def add_entry():
     entry = input("Write your diary entry: ")
-    timestamp = datetime.datetime.now().strftime("[%Y-%m-%d -- %-I:%M %p]")
+    timestamp = datetime.datetime.now().strftime("[%b %-d, %Y -- %-I:%M %p]")
     entry_line = f"{entry} == {timestamp}\n"
 
     try:
