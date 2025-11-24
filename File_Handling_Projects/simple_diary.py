@@ -122,7 +122,7 @@ def del_entry():
 def get_user_choice():
     """
     Displays the menu options and repeatedly prompts the user for a valid
-    integer choice (1-4) until a correct value is entered.
+    integer choice (1-5) until a correct value is entered.
     """
     while True:
         try:
