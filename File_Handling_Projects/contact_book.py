@@ -80,8 +80,45 @@ def add_contact():
 
 
 def search_contact():
-    pass
+    contacts = load_contact()
 
+    if not contacts:
+        print("\nContact book is empty. Nothing to search.")
+        input("Press Enter to return to the Main Menu...")
+        return
+
+    keyword = input("\nEnter Name or Phone Number (partial match allowed) to search: ").lower().strip()
+    if not keyword:
+        print("Search term cannot be empty. Search cancelled.")
+        return
+
+    match_contact = []
+
+    for contact in contacts:
+        name = contact.get('name', '').lower()
+        phone = contact.get('phone', '')
+
+    if keyword in name or keyword in phone:
+        match_contact.append(contact)
+
+
+    print("\nSEARCH RESULTS:")
+
+    if match_contact:
+        match_contact.sort(key=lambda contact: contact['name'])
+
+        print("\n=========================================================")
+        print(f"| {'Name':<30} | {'Phone Number':<20} |")
+        print("=========================================================")
+        for contact in match_contact:
+            print(f"| {contact['name']:<30} | {contact['phone']:<20} |")
+
+        print("---------------------------------------------------------")
+    else:
+        print(f"No contacts found matching '{keyword}'.")
+
+    input("\nPress Enter to return to the Main Menu...")
+#  not working..... do ot later
 
 
 def edit_contact():
