@@ -126,9 +126,9 @@ def get_user_choice():
     """
     while True:
         try:
-            print("\n" + "="*34)
+            print("\n" + "="*37)
             print("WELCOME TO THE SIMPLE DIARY/NOTEBOOK")
-            print("="*34)
+            print("="*37)
 
             choice = int(input("\n1. View All Entries \n" \
                                "2. Add New Entry \n" \
