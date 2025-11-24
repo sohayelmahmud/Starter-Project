@@ -138,6 +138,8 @@ def get_user_choice():
 
         except ValueError:
             print("Invalid input. Please enter a number.")
+
+
 #main func
 def main():
     while True:
