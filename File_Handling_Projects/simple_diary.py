@@ -52,6 +52,9 @@ def search_entry():
         return
 
     keyword = input("Enter keyword or date (e.g., 2025-11-24) to search: ").lower()
+    if not keyword:
+        print("Search term cannot be empty. Search cancelled.")
+        return
     match_entry = []
 
     try:
@@ -68,7 +71,7 @@ def search_entry():
                 print(entry)
         else:
             print(f"No entries found containing '{keyword}'.")
-            input("\nPress Enter to return to the Main Menu...")
+            # input("\nPress Enter to return to the Main Menu...") # commented it, it called enter twice
         input("Press Enter to return to the Main Menu...")
 
     except Exception as e:
