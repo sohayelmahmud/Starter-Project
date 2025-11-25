@@ -91,38 +91,144 @@ def search_contact():
     if not keyword:
         print("Search term cannot be empty. Search cancelled.")
         return
-
     match_contact = []
 
-    for contact in contacts:
-        name = contact.get('name', '').lower()
-        phone = contact.get('phone', '')
+    try:
+        for contact in contacts:
+            name = contact.get('name', '').lower()
+            phone = contact.get('phone', '')
 
-    if keyword in name or keyword in phone:
-        match_contact.append(contact)
+            if keyword in name or keyword in phone:
+                match_contact.append(contact)
 
 
-    print("\nSEARCH RESULTS:")
+        print("\nSEARCH RESULTS:")
 
-    if match_contact:
-        match_contact.sort(key=lambda contact: contact['name'])
+        if match_contact:
+            match_contact.sort(key=lambda contact: contact['name'])
 
-        print("\n=========================================================")
-        print(f"| {'Name':<30} | {'Phone Number':<20} |")
-        print("=========================================================")
-        for contact in match_contact:
-            print(f"| {contact['name']:<30} | {contact['phone']:<20} |")
+            print("\n=========================================================")
+            print(f"| {'Name':<30} | {'Phone Number':<20} |")
+            print("=========================================================")
+            for contact in match_contact:
+                print(f"| {contact['name']:<30} | {contact['phone']:<20} |")
 
-        print("---------------------------------------------------------")
-    else:
-        print(f"No contacts found matching '{keyword}'.")
+            print("---------------------------------------------------------")
+        else:
+            print(f"No contacts found matching '{keyword}'.")
+            # input("\nPress Enter to return to the Main Menu...") # comment it, it call the enter twice
 
-    input("\nPress Enter to return to the Main Menu...")
-#  not working..... do ot later
+        input("\nPress Enter to return to the Main Menu...")
+    except Exception as e:
+        print(f"An error occurd during search: {e}")
+
+
+def find_contact_to_edit(contact_list):
+    if not contact_list:
+        print("\nContact book is empty.")
+        return -1
+
+    keyword = input("\n[EDIT] Enter Name or Phone Number of the contact to edit: ").lower().strip()
+    if not keyword:
+        return -1
+    found_contact = []
+
+    try:
+        for index, contact in enumerate(contact_list):
+            name = contact.get('name', '').lower().strip()
+            phone = contact.get('phone', '').strip()
+
+            if keyword in name or keyword in phone:
+                found_contact.append({'index': index, 'contact': contact})
+
+
+        print("\nSEARCH RESULTS:")
+
+        if found_contact:
+            found_contact.sort(key=lambda contact: contact['name'])
+
+            print("Contact found. Choose to edit")
+            print("\n============================================================")
+            print(f"|{'SL':<3} | {'Name':<30} | {'Phone Number':<20} |")
+            print("============================================================")
+            for sl, item in enumerate(found_contact, 1):
+                contact = item['contact']
+                print(f"| {sl:<3} | {contact['name']:<30} | {contact['phone']:<20} |")
+
+            print("------------------------------------------------------------")
+        else:
+            print(f"No contacts found matching '{keyword}'.")
+            return -1
+    except Exception as e:
+        print(f"An error occurd during search: {e}")
+
+    while True:
+        try:
+            choice = int(input(f"Enter SL number (1-{len(found_contact)}) to edit, or 0 to cancel: "))
+
+            if choice == 0:
+                print("Edit cancelled.")
+                return -1
+
+            if 1 <= choice <= len(found_contact):
+                return found_contact[choice-1]['index']
+            else:
+                print("Invalid serial number. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 
 def edit_contact():
-    pass
+    contacts = load_contact()
+    contact_index = find_contact_to_edit(contacts)
+
+    if contact_index == -1:
+        input("\nPress Enter to return to the Main Menu...")
+        return
+
+    contact_to_edit = contacts(contact_index)
+
+    print(f"\n---Edititng: {contact_to_edit['name']} ({contact_to_edit['phone']})---")
+
+    while True:
+        print("Which field do you want to delete?")
+        edit_choice = input("Enter 'N' for Name, 'P' for Phone or'0' to cancel: ").strip().lower()
+
+        if edit_choice == '0':
+            print("Edit operation cancelled.")
+            return
+        elif edit_choice in ('n', 'p'):
+            break
+        else:
+            print("Invalid choice. Please enter 'N', 'P', or '0'.")
+
+    if edit_choice == 'n':
+        new_name = input(f"Enter new Name for '{contact_to_edit['name']}': ").strip().title()
+        if new_name:
+            contacts[contact_index]['name'] = new_name
+            print(f"Name successfully updated to: {new_name}")
+        else:
+            print("Name cannot be empty. No change made.")
+            return
+    elif edit_choice == 'p':
+        new_phone = input(f"Enter new Phone Number for '{contact_to_edit['phone']}': ").stripe()
+        if new_phone:
+            contacts[contact_index]['phone'] = new_phone
+            print(f"Phone Number succesfully updated to: {new_phone}")
+        else:
+            print("Phone Number cannot be empty. No change made.")
+            return
+
+    save_contact(contacts)
+    print("\n✅ Update Successful!")
+    print("\n--- Updated Contact Details ---")
+    print("\n=========================================================")
+    print(f"| {'Name':<30} | {'Phone Number':<20} |")
+    print("=========================================================")
+    print(f"| {contact_to_edit['name']:<30} | {contact_to_edit['phone']:<20} |")
+    print("---------------------------------------------------------")
+    input("\nPress Enter to return to the Main Menu...")
+
 
 
 
