@@ -62,11 +62,21 @@ def save_contact(contact_list):
 def add_contact():
     print("\nNew Contact Details:")
     name = input("Enter Name: ").strip().title()
-    phone = input("Enter Number: ").strip()
-
-    if not name or not phone:
-        print("Name and Phone number cannot be empty. Contact addition cancelled.")
+    if not name:
+        print("Name cannot be empty. Contact addition cancelled.")
         return
+
+    while True:
+        phone = input("Enter Number: ").strip()
+
+        if not phone:
+            print("Phone number cannot be empty. Contact addition cancelled.")
+            return
+
+        if phone.isdigit():
+            break
+        else:
+            print("Error: Phone number must contain only digits. Please try again.")
 
     contacts = load_contact()
     new_contact = {
@@ -123,12 +133,12 @@ def search_contact():
         print(f"An error occurd during search: {e}")
 
 
-def find_contact_to_edit(contact_list):
+def find_contact(contact_list):
     if not contact_list:
         print("\nContact book is empty.")
         return -1
 
-    keyword = input("\n[EDIT] Enter Name or Phone Number of the contact to edit: ").lower().strip()
+    keyword = input("\nEnter Name or Phone Number of the contact to edit: ").lower().strip()
     if not keyword:
         return -1
     found_contact = []
@@ -145,8 +155,7 @@ def find_contact_to_edit(contact_list):
         print("\nSEARCH RESULTS:")
 
         if found_contact:
-            found_contact.sort(key=lambda contact: contact['name'])
-
+            found_contact.sort(key=lambda item: item['contact']['name'])
             print("Contact found. Choose to edit")
             print("\n============================================================")
             print(f"|{'SL':<3} | {'Name':<30} | {'Phone Number':<20} |")
@@ -180,18 +189,18 @@ def find_contact_to_edit(contact_list):
 
 def edit_contact():
     contacts = load_contact()
-    contact_index = find_contact_to_edit(contacts)
+    contact_index = find_contact(contacts)
 
     if contact_index == -1:
         input("\nPress Enter to return to the Main Menu...")
         return
 
-    contact_to_edit = contacts(contact_index)
+    contact_to_edit = contacts[contact_index]
 
     print(f"\n---Edititng: {contact_to_edit['name']} ({contact_to_edit['phone']})---")
 
     while True:
-        print("Which field do you want to delete?")
+        print("Which field do you want to edit?")
         edit_choice = input("Enter 'N' for Name, 'P' for Phone or'0' to cancel: ").strip().lower()
 
         if edit_choice == '0':
@@ -210,33 +219,59 @@ def edit_contact():
         else:
             print("Name cannot be empty. No change made.")
             return
+
     elif edit_choice == 'p':
-        new_phone = input(f"Enter new Phone Number for '{contact_to_edit['phone']}': ").stripe()
-        if new_phone:
-            contacts[contact_index]['phone'] = new_phone
-            print(f"Phone Number succesfully updated to: {new_phone}")
-        else:
-            print("Phone Number cannot be empty. No change made.")
-            return
+        while True:
+            new_phone = input(f"Enter new Phone Number for '{contact_to_edit['phone']}': ").strip()
+            if not new_phone:
+                print("Phone Number cannot be empty. No change made.")
+                return
+            if new_phone.isdigit():
+                break
+            else:
+                print("Error: Phone number must contain only digits. Please try again.")
+
+        contacts[contact_index]['phone'] = new_phone
+        print(f"Phone Number successfully updated to: {new_phone}")
 
     save_contact(contacts)
-    print("\n✅ Update Successful!")
+    updated_contact = contacts[contact_index]
+
+    print("\nUpdate Successful!")
     print("\n--- Updated Contact Details ---")
     print("\n=========================================================")
     print(f"| {'Name':<30} | {'Phone Number':<20} |")
     print("=========================================================")
-    print(f"| {contact_to_edit['name']:<30} | {contact_to_edit['phone']:<20} |")
+    print(f"| {updated_contact['name']:<30} | {updated_contact['phone']:<20} |")
     print("---------------------------------------------------------")
     input("\nPress Enter to return to the Main Menu...")
 
 
-
-
 def del_contact():
-    pass
+    contacts = load_contact()
+    contact_index = find_contact(contacts)
 
+    if contact_index == -1:
+        input("\nPress Enter to return to the Main Menu...")
+        return
 
+    contact_to_delete = contacts[contact_index]
 
+    print(f"\n--- Confirmation ---")
+    print(f"Contact Name: {contact_to_delete['name']}")
+    print(f"Phone Number: {contact_to_delete['phone']}")
+    print("--------------------")
+
+    confirmation = input("Are you sure you want to delete this contact? (y/n): ").strip().lower()
+
+    if confirmation == 'y':
+        del contacts[contact_index]
+        save_contact(contacts)
+        print(f"\nContact '{contact_to_delete['name']}' deleted successfully.")
+    else:
+        print("Deletion cancelled.")
+
+    input("\nPress Enter to return to the Main Menu...")
 
 
 def get_user_choice():
@@ -266,6 +301,7 @@ def get_user_choice():
 
         except ValueError:
             print("Invalid input. Please enter a number.")
+
 
 
 def main():
